@@ -1,0 +1,54 @@
+Voce necessariamente precisa ter o Chrome instalado!!!
+Voce não precisa abrir ou alterar a planilha!!
+
+Passo 1: Prepare os Arquivos
+Você vai receber uma pasta com o nome dist. É dentro dessa pasta que todos os arquivos do aplicativo estão.
+
+Abra a pasta dist e você verá três arquivos principais:
+
+robo-der.exe: O aplicativo para rodar a automação.
+
+chromedriver.exe: Uma ferramenta que o aplicativo usa para controlar o navegador Chrome.
+
+!!você precisa ter a versão compatível com seu navegador, recomendo que baixe e substitua""
+
+Planilha-DER.xlsx: Uma planilha de exemplo.
+
+!!Mantenha esses três arquivos sempre na mesma pasta para que o aplicativo funcione corretamente!!
+
+
+Passo 2: Use o Aplicativo
+Para começar, basta dar um duplo clique no arquivo robo-der. (a que tem a fotinho do frota kkk)
+
+Uma janela simples irá se abrir. Na área de texto, você pode colar a sua lista de Placas e AITs. O formato deve ser um par por linha, separado por um espaço.
+
+Exemplo:
+
+EQP5G22 1DI7483271
+SSE0G99 1S1078781
+(pode apagar esse exemplo)
+
+Depois de colar os dados, clique no botão "Rodar Automação".
+
+Uma janela do Google Chrome vai se abrir e o robô começará a fazer as pesquisas.
+
+A janela do aplicativo mostrará o status do robô em tempo real.
+
+Quando a automação terminar, a janela do Chrome vai fechar e os resultados serão mostrados na área de texto na parte de baixo do aplicativo.
+
+OK: Se a indicação foi aceita.
+
+problemas na indicação: Se a indicação foi encontrada, mas há um problema.
+
+Sem resultado: Se a placa e o AIT não foram encontrados.
+
+Erro desconhecido: Se ocorreu um problema inesperado durante a pesquisa.
+
+Dicas Importantes
+Você pode fechar o aplicativo a qualquer momento.
+
+Para fazer uma nova busca, basta inserir novos dados na área de texto e clicar em "Rodar Automação" novamente.
+
+Se aparecer um pop-up: ERRO Atenção: NAO EXISTEM REGISTROS PARA A PLACA/AIT INFORMADO, não se preocupe o robô esta programado para pular esse erro.
+
+Se um erro grave acontecer por favor me contate!! :)
