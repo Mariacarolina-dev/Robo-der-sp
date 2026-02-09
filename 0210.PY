@@ -4,26 +4,31 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import threading
 
 
-# DER-SP
+# --- FUNÇÕES DE AUTOMAÇÃO ---
+
+def executar_der_sp_thread(consultas, tree_resultados):
+    """Inicia a execução da automação em uma thread separada para não travar a interface."""
+    thread = threading.Thread(target=executar_der_sp, args=(consultas, tree_resultados))
+    thread.daemon = True # Garante que a thread feche se o programa principal fechar
+    thread.start()
+
+
 def executar_der_sp(consultas, tree_resultados):
-    # O caminho para o chromedriver.exe pode ser ajustado
+    """Executa o scraping do DER-SP com gerenciamento automático de versão do driver."""
     try:
         chrome_options = Options()
-        # Se você tiver problemas, verifique se 'chromedriver.exe' está no PATH ou use o caminho absoluto.
-        service = Service('./chromedriver.exe') 
+        # O ChromeDriverManager baixa e gerencia a versão correta do driver automaticamente
+        service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=chrome_options)
-    except Exception as e:
-        messagebox.showerror("Erro de WebDriver", f"Não foi possível iniciar o Chrome Driver. Erro: {e}")
-        return
-    # URL do site DER São Paulo 
-    url = "http://www.eindicacao.der.sp.gov.br/der_eindicacao_web/Pesquisa/Placa_AIT"
-    
-    try:
+        
+        url = "http://www.eindicacao.der.sp.gov.br/der_eindicacao_web/Pesquisa/Placa_AIT"
         driver.get(url)
 
         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "PLACA")))
@@ -85,11 +90,11 @@ def executar_der_sp(consultas, tree_resultados):
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "PLACA")))
 
             except Exception as e:
-                resultados.append((placa, ait, f"Erro na consulta:", ""))
+                resultados.append((placa, ait, f"Erro na consulta", ""))
                 driver.get(url) 
                 WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "PLACA")))
 
-        # Mostra na interface (limpa e insere)
+        # Atualiza a interface (limpa e insere) - usamos root.after para segurança da UI
         for item in tree_resultados.get_children():
             tree_resultados.delete(item)
 
@@ -102,10 +107,11 @@ def executar_der_sp(consultas, tree_resultados):
     finally:
         if 'driver' in locals() and driver:
             driver.quit()
-        messagebox.showinfo("Consulta Concluída", "Todas as consultas foram finalizadas.") # Amém, deu tudo certo!!!
+        messagebox.showinfo("Consulta Concluída", "Todas as verificações foram finalizadas.")
 
 
-# INTERFACE
+# --- INTERFACE ---
+
 def abrir_interface():
     root = tk.Tk()
     root.title("Consulta DER-SP (Placa/AIT)")
@@ -115,7 +121,7 @@ def abrir_interface():
     BG_COLOR = root["bg"] 
     TEXT_COLOR = "gray"
 
-    # Botão principal para Placas e AITs 
+    # Frame principal
     frame_text = tk.Frame(root)
     frame_text.pack(pady=10)
 
@@ -130,43 +136,35 @@ def abrir_interface():
     text_aits.grid(row=1, column=1, padx=10)
 
     def iniciar_consulta():
-        """Função para iniciar o processo de raspagem de dados."""
+        """Prepara os dados e dispara a automação em thread."""
         placas = [p.strip().upper() for p in text_placas.get("1.0", tk.END).strip().splitlines() if p.strip()]
         aits = [a.strip() for a in text_aits.get("1.0", tk.END).strip().splitlines() if a.strip()]
 
-        # Aviso caso esqueça de preencher 
         if not placas or not aits:
             messagebox.showwarning("Aviso", "As listas de Placas e AITs não podem estar vazias.")
             return
 
-        # Aviso caso quantidade não bata
         if len(placas) != len(aits):
             messagebox.showwarning("Aviso", "A quantidade de Placas e AITs deve ser igual.")
             return
 
         consultas = list(zip(placas, aits))
-        executar_der_sp(consultas, tree_resultados)
+        # Agora chamamos a função de thread para evitar NameError e travamento da UI
+        executar_der_sp_thread(consultas, tree_resultados)
 
     def limpar_campos_e_tabela():
-        """Função para limpar os campos de texto e a tabela de resultados."""
+        """Limpa campos de texto e a tabela."""
         text_placas.delete("1.0", tk.END)
         text_aits.delete("1.0", tk.END)
-        
-        # Limpa todos os itens da treeview
         for item in tree_resultados.get_children():
             tree_resultados.delete(item)
-            
         messagebox.showinfo("Limpeza", "Campos e resultados limpos.")
 
-    # Botões ABAIXO das colunas
-    
-    # Botão Consultar (abaixo de Placas)
+    # Botões
     tk.Button(frame_text, text="Consultar", command=iniciar_consulta, width=20, bg="green", fg="white").grid(row=2, column=0, pady=10, padx=10, sticky="n")
-    
-    # Botão Limpar (abaixo de AITs)
     tk.Button(frame_text, text="Limpar", command=limpar_campos_e_tabela, width=20, bg="red", fg="white").grid(row=2, column=1, pady=10, padx=10, sticky="n")
     
-    # Criação da Tabela de Resultados
+    # Tabela de Resultados
     tree_resultados = ttk.Treeview(
         root,
         columns=("Placa", "AIT", "Situação", "Protocolo"),
@@ -184,9 +182,8 @@ def abrir_interface():
     tree_resultados.column("Protocolo", width=120, anchor=tk.CENTER)
     
     tree_resultados.pack(fill="x", padx=10, pady=10)
-    #Tabela de Resultados
 
-# --- CÓDIGO DE CÓPIA ---
+    # --- LÓGICA DE CÓPIA ---
     def copiar_selecao(event=None):
         item_id = tree_resultados.selection()
         if item_id:
@@ -194,7 +191,7 @@ def abrir_interface():
             texto = "\t".join(valores)
             root.clipboard_clear()
             root.clipboard_append(texto)
-            root.update() # Garante que o sistema receba a atualização
+            root.update()
 
     def menu_popup(event):
         item_id = tree_resultados.identify_row(event.y)
