@@ -1,0 +1,6 @@
+desktop.ini
+*.spec
+config.json
+__pycache__/
+build/
+dist/
