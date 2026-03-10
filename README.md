@@ -1,68 +1,88 @@
-===============================================================================
-          ROBÔ DE CONSULTA DER-SP (PLACA/AIT) - GUIA DO USUÁRIO
-===============================================================================
+# 🤖 Robô de Consulta DER-SP (Placa/AIT)
 
-Este software automatiza a consulta de multas e protocolos no portal oficial 
-do DER-SP. Ele foi desenvolvido para processar múltiplas consultas de forma 
-rápida e segura.
+Este projeto é uma ferramenta de automação (RPA) desenvolvida em **Python** para realizar consultas em lote no portal do **DER-SP**. Ele utiliza **Selenium** para navegação web e **Tkinter** para oferecer uma interface gráfica amigável, permitindo que usuários sem conhecimento em programação utilizem o robô.
 
--------------------------------------------------------------------------------
-1. PRÉ-REQUISITOS PARA O USUÁRIO FINAL
--------------------------------------------------------------------------------
-Para que o programa funcione corretamente no seu computador, certifique-se de:
-- Ter o Google Chrome instalado e atualizado.
-- Ter uma conexão ativa com a internet (o robô precisa acessar o site do DER).
-- O Windows pode exibir um alerta de "Fornecedor Desconhecido" ao abrir o .exe
-  pela primeira vez. Clique em "Mais informações" e "Executar assim mesmo".
+---
 
--------------------------------------------------------------------------------
-2. COMO INSTALAR E RODAR
--------------------------------------------------------------------------------
-O programa é "Portable" (Portátil), o que significa que não precisa de um 
-instalador complexo:
-1. Crie uma pasta em um local de fácil acesso (ex: Área de Trabalho ou Documentos).
-2. Cole o arquivo "Consulta_DER.exe" dentro desta pasta.
-3. Dê um clique duplo para abrir. 
-   *Nota: Na primeira vez, ele pode demorar alguns segundos para carregar as 
-    bibliotecas internas.*
+## 🚀 Funcionalidades
+- **Consulta em Lote:** Processa múltiplas placas e AITs simultaneamente.
+- **Interface Intuitiva:** Campos de texto simples para colar dados e tabela de resultados (Treeview).
+- **Multithreading:** A interface permanece responsiva e não trava durante a execução do robô.
+- **Gestão Automática de Driver:** Utiliza `webdriver-manager` para configurar o Chrome automaticamente, eliminando a necessidade de baixar o `chromedriver.exe` manualmente.
+- **Exportação Rápida:** Menu de contexto (botão direito) para copiar os resultados diretamente para a área de transferência.
 
--------------------------------------------------------------------------------
-3. PASSO A PASSO DE USO (DENTRO DO PROGRAMA)
--------------------------------------------------------------------------------
-Passo 1: Prepare suas listas.
-   - Na coluna da ESQUERDA, cole as PLACAS (uma por linha).
-   - Na coluna da DIREITA, cole os números de AIT (um por linha).
-   IMPORTANTE: A quantidade de Placas deve ser a mesma de AITs.
+---
 
-Passo 2: Inicie a Consulta.
-   - Clique no botão VERDE "Consultar".
-   - Uma janela do navegador Chrome será aberta automaticamente. 
-   - ATENÇÃO: Não feche ou mexa na janela do navegador que o robô abriu, 
-     pois isso interromperá o processo.
+## 🛠️ Tecnologias e Requisitos
+- **Linguagem:** [Python 3.13+](https://www.python.org/)
+- **Bibliotecas Principais:** `selenium`, `webdriver-manager`, `tkinter`, `threading`.
+- **Navegador:** Google Chrome instalado e atualizado.
 
-Passo 3: Verifique os Resultados.
-   - Assim que o robô terminar, os dados aparecerão na tabela inferior.
-   - Para copiar uma linha específica (Placa, AIT, Situação e Protocolo), 
-     clique com o botão DIREITO sobre a linha e escolha "Copiar".
+---
 
-Passo 4: Finalização.
-   - Ao terminar todas as consultas, o robô exibirá um aviso de "Concluído" 
-     e fechará o navegador automaticamente.
+## 💻 Como Rodar (Para Desenvolvedores)
 
--------------------------------------------------------------------------------
-4. SOLUÇÃO DE PROBLEMAS (FAQ)
--------------------------------------------------------------------------------
-- O NAVEGADOR FECHOU SOZINHO: Isso acontece se houver erro de conexão ou se 
-  o site do DER estiver fora do ar. Tente clicar em "Consultar" novamente.
-- ERRO DE "WEBDRIVER": Verifique se o seu Google Chrome está atualizado. O 
-  robô tenta baixar o driver correto sozinho, mas precisa de internet para isso.
-- O PROGRAMA TRAVOU: A interface foi projetada para não travar (Multithread), 
-  mas se o computador estiver muito lento, aguarde alguns segundos.
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/Mariacarolina-dev/Robo-der-sp.git](https://github.com/Mariacarolina-dev/Robo-der-sp.git)
+   cd Robo-der-sp
 
--------------------------------------------------------------------------------
-5. SUPORTE E CRÉDITOS
--------------------------------------------------------------------------------
-Desenvolvido por: Maria Carolina
-Versão: 1.0 (2026)
-Tecnologias: Python, Selenium & Tkinter.
-===============================================================================
+```
+
+2. **Instale as dependências:**
+```bash
+pip install selenium webdriver-manager
+
+```
+
+
+3. **Execute o script:**
+```bash
+python 0210.PY
+
+```
+
+
+
+---
+
+## 📦 Como Gerar e Usar o Executável (.exe)
+
+Se você deseja transformar este script em um programa independente para usuários que não possuem Python instalado:
+
+1. **Instale o PyInstaller:**
+```bash
+pip install pyinstaller
+
+```
+
+
+2. **Gere o arquivo:**
+```bash
+pyinstaller --noconsole --onefile --name "Consulta_DER_SP" 0210.PY
+
+```
+
+
+*O arquivo final será gerado na pasta `dist/`.*
+
+### 📖 Guia de Uso para o Usuário Final
+
+1. Abra o arquivo `Consulta_DER_SP.exe`.
+2. Na coluna da **Esquerda**, cole as **Placas** (uma por linha).
+3. Na coluna da **Direita**, cole os números de **AIT** (na mesma ordem das placas).
+4. Clique em **Consultar**. O robô abrirá o Chrome e preencherá os dados sozinho.
+5. **Atenção:** Não feche a janela do navegador enquanto o robô estiver trabalhando.
+6. Ao final, os resultados aparecerão na tabela. Clique com o botão direito para copiar.
+
+---
+
+## ⚠️ Observações e FAQ
+
+* **Erro de Conexão:** Se o site do DER estiver instável, o robô pode falhar em carregar os elementos. Reinicie a consulta se necessário.
+* **Antivírus:** O Windows pode sinalizar o `.exe` como desconhecido. Clique em "Mais informações" > "Executar assim mesmo".
+* **Privacidade:** Certifique-se de não subir arquivos de configuração pessoal (`config.json`) para repositórios públicos.
+
+---
+
+**Desenvolvido por [Maria Carolina](https://www.google.com/search?q=https://github.com/Mariacarolina-dev) ✨**
