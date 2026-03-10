@@ -1,54 +1,68 @@
-Voce necessariamente precisa ter o Chrome instalado!!!
-Voce não precisa abrir ou alterar a planilha!!
+===============================================================================
+          ROBÔ DE CONSULTA DER-SP (PLACA/AIT) - GUIA DO USUÁRIO
+===============================================================================
 
-Passo 1: Prepare os Arquivos
-Você vai receber uma pasta com o nome dist. É dentro dessa pasta que todos os arquivos do aplicativo estão.
+Este software automatiza a consulta de multas e protocolos no portal oficial 
+do DER-SP. Ele foi desenvolvido para processar múltiplas consultas de forma 
+rápida e segura.
 
-Abra a pasta dist e você verá três arquivos principais:
+-------------------------------------------------------------------------------
+1. PRÉ-REQUISITOS PARA O USUÁRIO FINAL
+-------------------------------------------------------------------------------
+Para que o programa funcione corretamente no seu computador, certifique-se de:
+- Ter o Google Chrome instalado e atualizado.
+- Ter uma conexão ativa com a internet (o robô precisa acessar o site do DER).
+- O Windows pode exibir um alerta de "Fornecedor Desconhecido" ao abrir o .exe
+  pela primeira vez. Clique em "Mais informações" e "Executar assim mesmo".
 
-robo-der.exe: O aplicativo para rodar a automação.
+-------------------------------------------------------------------------------
+2. COMO INSTALAR E RODAR
+-------------------------------------------------------------------------------
+O programa é "Portable" (Portátil), o que significa que não precisa de um 
+instalador complexo:
+1. Crie uma pasta em um local de fácil acesso (ex: Área de Trabalho ou Documentos).
+2. Cole o arquivo "Consulta_DER.exe" dentro desta pasta.
+3. Dê um clique duplo para abrir. 
+   *Nota: Na primeira vez, ele pode demorar alguns segundos para carregar as 
+    bibliotecas internas.*
 
-chromedriver.exe: Uma ferramenta que o aplicativo usa para controlar o navegador Chrome.
+-------------------------------------------------------------------------------
+3. PASSO A PASSO DE USO (DENTRO DO PROGRAMA)
+-------------------------------------------------------------------------------
+Passo 1: Prepare suas listas.
+   - Na coluna da ESQUERDA, cole as PLACAS (uma por linha).
+   - Na coluna da DIREITA, cole os números de AIT (um por linha).
+   IMPORTANTE: A quantidade de Placas deve ser a mesma de AITs.
 
-!!você precisa ter a versão compatível com seu navegador, recomendo que baixe e substitua""
+Passo 2: Inicie a Consulta.
+   - Clique no botão VERDE "Consultar".
+   - Uma janela do navegador Chrome será aberta automaticamente. 
+   - ATENÇÃO: Não feche ou mexa na janela do navegador que o robô abriu, 
+     pois isso interromperá o processo.
 
-Planilha-DER.xlsx: Uma planilha de exemplo.
+Passo 3: Verifique os Resultados.
+   - Assim que o robô terminar, os dados aparecerão na tabela inferior.
+   - Para copiar uma linha específica (Placa, AIT, Situação e Protocolo), 
+     clique com o botão DIREITO sobre a linha e escolha "Copiar".
 
-!!Mantenha esses três arquivos sempre na mesma pasta para que o aplicativo funcione corretamente!!
+Passo 4: Finalização.
+   - Ao terminar todas as consultas, o robô exibirá um aviso de "Concluído" 
+     e fechará o navegador automaticamente.
 
+-------------------------------------------------------------------------------
+4. SOLUÇÃO DE PROBLEMAS (FAQ)
+-------------------------------------------------------------------------------
+- O NAVEGADOR FECHOU SOZINHO: Isso acontece se houver erro de conexão ou se 
+  o site do DER estiver fora do ar. Tente clicar em "Consultar" novamente.
+- ERRO DE "WEBDRIVER": Verifique se o seu Google Chrome está atualizado. O 
+  robô tenta baixar o driver correto sozinho, mas precisa de internet para isso.
+- O PROGRAMA TRAVOU: A interface foi projetada para não travar (Multithread), 
+  mas se o computador estiver muito lento, aguarde alguns segundos.
 
-Passo 2: Use o Aplicativo
-Para começar, basta dar um duplo clique no arquivo robo-der. (a que tem a fotinho do frota kkk)
-
-Uma janela simples irá se abrir. Na área de texto, você pode colar a sua lista de Placas e AITs. O formato deve ser um par por linha, separado por um espaço.
-
-Exemplo:
-
-EQP5G22 1DI7483271
-SSE0G99 1S1078781
-(pode apagar esse exemplo)
-
-Depois de colar os dados, clique no botão "Rodar Automação".
-
-Uma janela do Google Chrome vai se abrir e o robô começará a fazer as pesquisas.
-
-A janela do aplicativo mostrará o status do robô em tempo real.
-
-Quando a automação terminar, a janela do Chrome vai fechar e os resultados serão mostrados na área de texto na parte de baixo do aplicativo.
-
-OK: Se a indicação foi aceita.
-
-problemas na indicação: Se a indicação foi encontrada, mas há um problema.
-
-Sem resultado: Se a placa e o AIT não foram encontrados.
-
-Erro desconhecido: Se ocorreu um problema inesperado durante a pesquisa.
-
-Dicas Importantes
-Você pode fechar o aplicativo a qualquer momento.
-
-Para fazer uma nova busca, basta inserir novos dados na área de texto e clicar em "Rodar Automação" novamente.
-
-Se aparecer um pop-up: ERRO Atenção: NAO EXISTEM REGISTROS PARA A PLACA/AIT INFORMADO, não se preocupe o robô esta programado para pular esse erro.
-
-Se um erro grave acontecer por favor me contate!! :)
+-------------------------------------------------------------------------------
+5. SUPORTE E CRÉDITOS
+-------------------------------------------------------------------------------
+Desenvolvido por: Maria Carolina
+Versão: 1.0 (2026)
+Tecnologias: Python, Selenium & Tkinter.
+===============================================================================
