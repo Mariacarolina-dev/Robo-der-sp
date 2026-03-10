@@ -117,6 +117,11 @@ def abrir_interface():
     root.title("Consulta DER-SP (Placa/AIT)")
     root.geometry("800x600")
 
+    try:
+        root.iconbitmap("meu_icone.ico")
+    except:
+        pass
+
     # cores interface
     BG_COLOR = root["bg"] 
     TEXT_COLOR = "black"
@@ -210,6 +215,10 @@ def abrir_interface():
     tree_resultados.bind("<Button-3>", menu_popup)
 
     root.mainloop()
+
+
+if __name__ == "__main__":
+    abrir_interface()
 
 
 if __name__ == "__main__":
