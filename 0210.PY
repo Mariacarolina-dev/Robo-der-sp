@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager # adicionei a biblioteca substituindo o executavel #
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
@@ -116,10 +116,14 @@ def abrir_interface():
     root = tk.Tk()
     root.title("Consulta DER-SP (Placa/AIT)")
     root.geometry("800x600")
-    
-    # Cores na Interface
+
+    # cores interface
     BG_COLOR = root["bg"] 
-    TEXT_COLOR = "gray"
+    TEXT_COLOR = "black"
+
+    # Rodapé
+    footer_label = tk.Label(root, text="Copyright © 2025 Maria Carolina", font=("Arial", 8, "italic"), bg=BG_COLOR, fg=TEXT_COLOR)
+    footer_label.pack(side="bottom", fill="x", pady=5)
 
     # Frame principal
     frame_text = tk.Frame(root)
@@ -181,7 +185,7 @@ def abrir_interface():
     tree_resultados.column("Situação", width=350, anchor=tk.W)
     tree_resultados.column("Protocolo", width=120, anchor=tk.CENTER)
     
-    tree_resultados.pack(fill="x", padx=10, pady=10)
+    tree_resultados.pack(fill="both", expand=True, padx=10, pady=10)
 
     # --- LÓGICA DE CÓPIA ---
     def copiar_selecao(event=None):
@@ -204,10 +208,6 @@ def abrir_interface():
     
     tree_resultados.bind("<Control-c>", copiar_selecao)
     tree_resultados.bind("<Button-3>", menu_popup)
-
-    # Rodapé
-    footer_label = tk.Label(root, text="Copyright © 2025 Maria Carolina | Desenvolvido com Python/Tkinter e Selenium", font=("Arial", 8, "italic"), bg=BG_COLOR, fg=TEXT_COLOR)
-    footer_label.pack(side="bottom", fill="x", pady=5)
 
     root.mainloop()
 
